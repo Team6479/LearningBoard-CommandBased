@@ -2,12 +2,16 @@ package org.usfirst.frc.team6479.robot.commands;
 
 import org.usfirst.frc.team6479.robot.Robot;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
 
-public class Drive extends Command {
+/**
+ *
+ */
+public class Piston1 extends Command {
 
-    public Drive() {
-    	requires(Robot.motors);
+    public Piston1() {
+    	requires(Robot.pneumatics);
     }
 
     // Called just before this Command runs the first time
@@ -17,18 +21,19 @@ public class Drive extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if (Math.abs(Robot.oi.xbox.getRawAxis(1)) > 0.2) {
-    		Robot.motors.setLeftMotor(Robot.oi.xbox.getRawAxis(1));
+    	if (Math.abs(Robot.oi.xbox.getRawAxis(2)) > 0) {
+    		Robot.pneumatics.setCompressor(true);
+    		System.out.println(Robot.pneumatics.getCompressor().getClosedLoopControl());
     	}
-    	else {
-    		Robot.motors.setLeftMotor(0);
+    	if (Math.abs(Robot.oi.xbox.getRawAxis(3)) > 0) {
+    		Robot.pneumatics.setCompressor(false);
+    		System.out.println(Robot.pneumatics.getCompressor().getClosedLoopControl());
     	}
-    	
-    	if (Math.abs(Robot.oi.xbox.getRawAxis(5)) > 0.2) {
-    		Robot.motors.setRightMotor(Robot.oi.xbox.getRawAxis(5));
+    	if (Robot.oi.xbox.getRawButton(5)) {
+    		Robot.pneumatics.setDoubleSolenoid(Value.kForward);
     	}
-    	else {
-    		Robot.motors.setRightMotor(0);
+    	if (Robot.oi.xbox.getRawButton(6)) {
+    		Robot.pneumatics.setDoubleSolenoid(Value.kReverse);
     	}
     }
 

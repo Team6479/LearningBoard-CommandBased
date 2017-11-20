@@ -11,7 +11,7 @@ public class RobotMap {
 	public static int rightMotor = 1;
 	
 	//PCM (Pneumatic Control Module)
-	public static int compressor = 1;
+	public static int compressor = 0;
 	public static int onSolenoid = 4;
 	public static int offSolenoid = 5;
 	
