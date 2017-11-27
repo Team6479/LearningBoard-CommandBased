@@ -21,20 +21,20 @@ public class Piston1 extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if (Math.abs(Robot.oi.xbox.getRawAxis(2)) > 0) {
-    		Robot.pneumatics.setCompressor(true);
-    		System.out.println(Robot.pneumatics.getCompressor().getClosedLoopControl());
-    	}
-    	if (Math.abs(Robot.oi.xbox.getRawAxis(3)) > 0) {
-    		Robot.pneumatics.setCompressor(false);
-    		System.out.println(Robot.pneumatics.getCompressor().getClosedLoopControl());
-    	}
-    	if (Robot.oi.xbox.getRawButton(5)) {
-    		Robot.pneumatics.setDoubleSolenoid(Value.kForward);
-    	}
-    	if (Robot.oi.xbox.getRawButton(6)) {
-    		Robot.pneumatics.setDoubleSolenoid(Value.kReverse);
-    	}
+		if(Robot.oi.rightBumper.wasJustPressed())
+		{	
+			if(Robot.pneumatics.getDoubleSolenoid().get() == Value.kForward)
+			{
+				Robot.pneumatics.setDoubleSolenoid(Value.kReverse);
+			}
+			else if(Robot.pneumatics.getDoubleSolenoid().get() == Value.kReverse)
+			{
+				Robot.pneumatics.setDoubleSolenoid(Value.kForward);
+			}
+			else {
+				Robot.pneumatics.setDoubleSolenoid(Value.kForward);
+			}
+		}
     }
 
     // Make this return true when this Command no longer needs to run execute()

@@ -1,6 +1,7 @@
 
 package org.usfirst.frc.team6479.robot;
 
+import org.usfirst.frc.team6479.robot.custom.ButtonTracker;
 import org.usfirst.frc.team6479.robot.subsystems.Motors;
 import org.usfirst.frc.team6479.robot.subsystems.Pneumatics;
 
@@ -102,14 +103,30 @@ public class Robot extends IterativeRobot {
 		// this line or comment it out.
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
+		
+		oi.compressor.setClosedLoopControl(false);
+		
 	}
-
 	/**
 	 * This function is called periodically during operator control
 	 */
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		
+		if(oi.leftBumper.wasJustPressed())
+		{	
+			if(oi.compressor.enabled())
+			{
+	 			oi.compressor.stop();
+			}
+			else
+			{
+				oi.compressor.start();
+			}
+		}
+		
+		ButtonTracker.updateAll();
 	}
 
 	/**
