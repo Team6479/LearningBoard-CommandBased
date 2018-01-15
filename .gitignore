@@ -1,4 +1,16 @@
 bin/
 build/
 dist/
+
+# Gradle Files
 .gradle/
+
+# IDE Files
+# Eclipse
+.classpath
+.project
+.settings/
+# IntelliJ
+*.iml
+*.ipr
+*.iws
