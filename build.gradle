@@ -3,10 +3,26 @@ plugins {
     id "eclipse"
     id "idea"
     id "jaci.openrio.gradle.GradleRIO" version "2018.01.11"
+    id "com.google.protobuf" version "0.8.3"
 }
 
 def TEAM = 6479
 def ROBOT_CLASS = "org.usfirst.frc.team6479.robot.Robot"
+
+repositories {
+    mavenCentral()
+}
+
+// Defining my dependencies. In this case, WPILib (+ friends), CTRE Toolsuite (Talon SRX)
+// and NavX.
+dependencies {
+    compile wpilib()
+    compile ctre()
+    compile navx()
+    compile openrio.powerup.matchData()
+    compile group: 'com.jcraft', name: 'jsch', version: '0.1.54'
+    compile group: 'com.google.protobuf', name: 'protobuf-java', version: '3.5.1'
+}
 
 // Define my targets (RoboRIO) and artifacts (deployable files)
 // This is added by GradleRIO's backing project EmbeddedTools.
@@ -23,20 +39,6 @@ deploy {
     }
 }
 
-
-repositories {
-    mavenCentral()
-}
-// Defining my dependencies. In this case, WPILib (+ friends), CTRE Toolsuite (Talon SRX)
-// and NavX.
-dependencies {
-    compile wpilib()
-    compile ctre()
-   	compile navx()
-    compile openrio.powerup.matchData()
-	compile group: 'com.jcraft', name: 'jsch', version: '0.1.54'
-}
-
 // Setting up my Jar File. In this case, adding all libraries into the main jar ('fat jar')
 // in order to make them all available at runtime. Also adding the manifest so WPILib
 // knows where to look for our Robot Class.
@@ -50,5 +52,5 @@ telemetry {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '4.4'
+    gradleVersion = '4.4.1'
 }
