@@ -1,16 +1,13 @@
 
 package org.usfirst.frc.team6479.robot;
 
+import org.usfirst.frc.team6479.robot.connection.Server;
 import org.usfirst.frc.team6479.robot.custom.ButtonTracker;
 import org.usfirst.frc.team6479.robot.subsystems.Motors;
 import org.usfirst.frc.team6479.robot.subsystems.Pneumatics;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -26,9 +23,10 @@ public class Robot extends IterativeRobot {
 	public static Pneumatics pneumatics;
 	
 	public static OI oi;
+	
+	public static Server server;
+	
 
-	Command autonomousCommand;
-	SendableChooser<Command> chooser = new SendableChooser<>();
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -41,8 +39,9 @@ public class Robot extends IterativeRobot {
 		pneumatics = new Pneumatics();
 		
 		oi = new OI();
-		// chooser.addObject("My Auto", new MyAutoCommand());
-		SmartDashboard.putData("Auto mode", chooser);
+		
+		server = new Server(1182);
+		server.startServer();
 	}
 
 	/**
@@ -73,18 +72,6 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		autonomousCommand = chooser.getSelected();
-
-		/*
-		 * String autoSelected = SmartDashboard.getString("Auto Selector",
-		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
-		 * = new MyAutoCommand(); break; case "Default Auto": default:
-		 * autonomousCommand = new ExampleCommand(); break; }
-		 */
-
-		// schedule the autonomous command (example)
-		if (autonomousCommand != null)
-			autonomousCommand.start();
 	}
 
 	/**
@@ -97,12 +84,6 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void teleopInit() {
-		// This makes sure that the autonomous stops running when
-		// teleop starts running. If you want the autonomous to
-		// continue until interrupted by another command, remove
-		// this line or comment it out.
-		if (autonomousCommand != null)
-			autonomousCommand.cancel();
 		
 		oi.compressor.setClosedLoopControl(false);
 		
@@ -127,6 +108,7 @@ public class Robot extends IterativeRobot {
 		}
 		
 		ButtonTracker.updateAll();
+		System.out.println(server.getCurrentClient().readData());
 	}
 
 	/**
@@ -134,6 +116,6 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void testPeriodic() {
-		LiveWindow.run();
+		
 	}
 }
