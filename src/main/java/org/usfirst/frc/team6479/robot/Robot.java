@@ -108,7 +108,7 @@ public class Robot extends IterativeRobot {
 		}
 		
 		ButtonTracker.updateAll();
-		System.out.println(server.getCurrentClient().readData());
+		System.out.println("Current distance from the center" + server.getCurrentClient().getDistance());
 	}
 
 	/**

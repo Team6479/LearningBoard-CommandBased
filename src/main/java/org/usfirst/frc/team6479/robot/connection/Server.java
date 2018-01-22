@@ -45,7 +45,7 @@ public class Server {
 	public boolean isAlive() {
 		return !serverThread.isInterrupted();
 	}
-	public ConnectionInstance getCurrentClient() {
+	public synchronized ConnectionInstance getCurrentClient() {
 		return current;
 	}
 	
