@@ -1,13 +1,15 @@
 
 package org.usfirst.frc.team6479.robot;
 
-import org.usfirst.frc.team6479.robot.connection.Server;
+import org.usfirst.frc.team6479.robot.connection.JetsonServer;
 import org.usfirst.frc.team6479.robot.custom.ButtonTracker;
 import org.usfirst.frc.team6479.robot.subsystems.Motors;
 import org.usfirst.frc.team6479.robot.subsystems.Pneumatics;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
+
+import communication.JetsonPacket.ModePacket;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -24,7 +26,7 @@ public class Robot extends IterativeRobot {
 	
 	public static OI oi;
 	
-	public static Server server;
+	public static JetsonServer server;
 	
 
 
@@ -40,8 +42,9 @@ public class Robot extends IterativeRobot {
 		
 		oi = new OI();
 		
-		server = new Server(1182);
-		server.startServer();
+		server = new JetsonServer(1182);
+		server.setMode(ModePacket.Mode.CUBE);
+		System.out.println("Server");
 	}
 
 	/**
@@ -108,7 +111,7 @@ public class Robot extends IterativeRobot {
 		}
 		
 		ButtonTracker.updateAll();
-		System.out.println("Current distance from the center" + server.getCurrentClient().getDistance());
+		System.out.println("Current distance from the center" + server.getDistance());
 	}
 
 	/**
