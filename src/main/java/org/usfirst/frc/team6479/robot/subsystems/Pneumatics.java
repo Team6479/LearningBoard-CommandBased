@@ -1,10 +1,8 @@
 package org.usfirst.frc.team6479.robot.subsystems;
 
-import org.usfirst.frc.team6479.robot.Robot;
 import org.usfirst.frc.team6479.robot.RobotMap;
 import org.usfirst.frc.team6479.robot.commands.Piston1;
 
-import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
