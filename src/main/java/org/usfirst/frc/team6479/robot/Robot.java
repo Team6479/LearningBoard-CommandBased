@@ -7,6 +7,8 @@ import org.usfirst.frc.team6479.robot.subsystems.Motors;
 import org.usfirst.frc.team6479.robot.subsystems.Pneumatics;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Relay;
+import edu.wpi.first.wpilibj.Relay.Value;
 import edu.wpi.first.wpilibj.command.Scheduler;
 
 import communication.JetsonPacket.ModePacket;
@@ -44,12 +46,26 @@ public class Robot extends IterativeRobot {
 		
 		server = new JetsonServer(1182);
 		server.setMode(ModePacket.Mode.CUBE);
+		
+		
+		
+		
+		sonar = new RangeFinder(0);
+		
+		spike = new Relay(0);
+		
+		//sonar
+		
 	}
+	private RangeFinder sonar;
+	private Relay spike;
 
 	@Override
 	public void robotPeriodic() {
 		//run commands
 		Scheduler.getInstance().run();
+		System.out.println("Distance: " + sonar.getDistance());
+		System.out.println("Voltage: " + sonar.getAverageVoltage());
 	}
 	
 	/**
@@ -113,6 +129,16 @@ public class Robot extends IterativeRobot {
 			else
 			{
 				oi.compressor.start();
+			}
+		}
+		
+		if(oi.yButton.wasJustPressed()) {
+			System.out.println(spike.get());
+			if(spike.get() == Value.kOff) {
+				spike.set(Value.kForward);
+			}
+			else {
+				spike.set(Value.kOff);
 			}
 		}
 		

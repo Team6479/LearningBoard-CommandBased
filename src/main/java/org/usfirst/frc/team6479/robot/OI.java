@@ -14,11 +14,13 @@ public class OI {
 	public Compressor compressor;
 	public ButtonTracker rightBumper;
 	public ButtonTracker leftBumper;
+	public ButtonTracker yButton;
 	
 	public OI() {
 		xbox = new XboxController(RobotMap.xbox);
 		compressor = new Compressor();
 		rightBumper = new ButtonTracker(xbox, 6);
 		leftBumper = new ButtonTracker(xbox, 5);
+		yButton = new ButtonTracker(xbox, 4);
 	}
 }
